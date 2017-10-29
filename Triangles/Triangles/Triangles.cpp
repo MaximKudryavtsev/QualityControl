@@ -2,6 +2,10 @@
 
 using namespace std;
 
+bool isEqual(double a, double b) {
+	return fabs(a - b) < numeric_limits<float>::epsilon();
+}
+
 void CheckInputData(double a, double b, double c)
 {
 	if (a < 0 || b < 0 || c < 0)
@@ -16,13 +20,13 @@ void CheckInputData(double a, double b, double c)
 
 string IdentifyTypeOfTriangle(double a, double b, double c)
 {
-	if ((a + b > c) && (b + c > a) && (a + c > b))
+	if ((!isEqual(a + b, c)) && (a + b > c) && !isEqual(b + c, a) && (b + c > a) && !isEqual(a + c, b) && (a + c > b))
 	{
-		if ((a == b) && (b == c))
+		if (isEqual(a, b) && isEqual(b, c))
 		{
 			return "equilateral";
 		}
-		else if ((a == b) || (b == c) || (a == c))
+		else if (isEqual(a, b) || isEqual(b, c) || isEqual(a, c))
 		{
 			return "isosceles";
 		}
@@ -37,6 +41,14 @@ string IdentifyTypeOfTriangle(double a, double b, double c)
 	}
 }
 
+void ReplaceCommaToDot(string& s)
+{
+	size_t pos = s.find(",");
+	if (pos != string::npos)
+	{
+		s.replace(pos, 1, ".");
+	}
+}
 
 int main(int argc, char* argv[])
 {
