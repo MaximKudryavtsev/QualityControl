@@ -11,7 +11,7 @@ void CheckInputData(double a, double b, double c)
 	if (a < 0 || b < 0 || c < 0)
 	{
 		throw invalid_argument("Side length of triangle can't be negative");
-	} 
+	}
 	else if (a == 0 || b == 0 || c == 0)
 	{
 		throw invalid_argument("Side length of triangle can't be 0");
@@ -33,7 +33,7 @@ string IdentifyTypeOfTriangle(double a, double b, double c)
 		else
 		{
 			return "normal";
-		}	
+		}
 	}
 	else
 	{
@@ -61,17 +61,24 @@ int main(int argc, char* argv[])
 		string aStr = argv[1],
 			   bStr = argv[2],
 			   cStr = argv[3];
+		ReplaceCommaToDot(aStr);
+		ReplaceCommaToDot(bStr);
+		ReplaceCommaToDot(cStr);
 		double a = boost::lexical_cast<double>(aStr);
 		double b = boost::lexical_cast<double>(bStr);
 		double c = boost::lexical_cast<double>(cStr);
 		CheckInputData(a, b, c);
 		cout << IdentifyTypeOfTriangle(a, b, c);
 	}
+	catch (boost::bad_lexical_cast)
+	{
+		cout << "Input can't contain letter";
+	}
 	catch (const exception& ex)
 	{
 		cout << ex.what() << endl;
 		return 1;
 	}
-    return 0;
+	
+	return 0;
 }
-
